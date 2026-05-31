@@ -1,43 +1,86 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colecta de Sangre — IEEE UOH</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@700&display=swap" rel="stylesheet">
 <style>
-  .y2k-wrap {
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Share Tech Mono', monospace;
+    background: #001a2e;
+    color: #a0d4f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 16px;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 720px;
     background: #001a2e;
     border: 2px solid #00629b;
     border-radius: 4px;
-    padding: 16px;
-    font-family: 'Share Tech Mono', monospace;
+    padding: 18px 20px;
     position: relative;
     overflow: hidden;
   }
-  .y2k-wrap::before {
+  .wrap::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,98,155,0.04) 3px, rgba(0,98,155,0.04) 4px);
     pointer-events: none;
+    z-index: 0;
   }
-  .y2k-header {
+  .wrap > * { position: relative; z-index: 1; }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #00629b;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     margin-bottom: 14px;
+    gap: 12px;
   }
-  .y2k-title {
+  .logos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .logos img {
+    height: 36px;
+    width: auto;
+    filter: brightness(0) invert(0.6) sepia(1) saturate(3) hue-rotate(180deg) brightness(1.2);
+    opacity: 0.85;
+  }
+  .logo-sep {
+    width: 1px;
+    height: 28px;
+    background: rgba(0,98,155,0.5);
+  }
+  .header-text { flex: 1; min-width: 0; }
+  .title {
     font-family: 'Oswald', sans-serif;
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 22px);
     color: #00aaff;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    line-height: 1.2;
+    line-height: 1.1;
   }
-  .y2k-sub {
+  .subtitle {
     font-size: 10px;
     color: #00629b;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 3px;
   }
-  .y2k-live {
+  .live-row {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -47,53 +90,57 @@
     letter-spacing: 2px;
     text-transform: uppercase;
   }
-  .y2k-blink { animation: blink 1s step-end infinite; color: #e24b4a; }
+  .blink { animation: blink 1s step-end infinite; color: #e24b4a; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  .y2k-stats {
+
+  /* STATS */
+  .stats {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
     margin-bottom: 14px;
   }
-  .y2k-stat {
+  .stat {
     border: 1px solid #00629b;
-    padding: 8px 10px;
+    padding: 8px 12px;
     background: rgba(0,98,155,0.08);
   }
-  .y2k-stat-val {
+  .stat-val {
     font-family: 'Oswald', sans-serif;
-    font-size: 24px;
+    font-size: clamp(20px, 5vw, 28px);
     color: #00aaff;
     line-height: 1;
   }
-  .y2k-stat-lbl {
+  .stat-lbl {
     font-size: 9px;
     color: #00629b;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 3px;
   }
-  .y2k-row {
+
+  /* RANKING */
+  .row {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0,98,155,0.25);
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(0,98,155,0.2);
   }
-  .y2k-row:last-child { border-bottom: none; }
-  .y2k-pos {
+  .row:last-child { border-bottom: none; }
+  .pos {
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
-    width: 28px;
+    width: 30px;
     text-align: center;
     flex-shrink: 0;
-    color: rgba(0,170,255,0.3);
+    color: rgba(0,170,255,0.25);
   }
-  .y2k-pos.p1 { color: #ffd700; }
-  .y2k-pos.p2 { color: #c0c0c0; }
-  .y2k-pos.p3 { color: #cd7f32; }
-  .y2k-info { flex: 1; min-width: 0; }
-  .y2k-name {
+  .pos.p1 { color: #ffd700; }
+  .pos.p2 { color: #c0c0c0; }
+  .pos.p3 { color: #cd7f32; }
+  .info { flex: 1; min-width: 0; }
+  .name {
     font-size: 11px;
     color: #a0d4f5;
     letter-spacing: 1px;
@@ -103,36 +150,40 @@
     text-overflow: ellipsis;
     margin-bottom: 5px;
   }
-  .y2k-track {
+  .track {
     height: 4px;
     background: rgba(0,98,155,0.2);
     position: relative;
   }
-  .y2k-fill {
+  .fill {
     height: 100%;
     background: #00629b;
     transition: width 1.2s cubic-bezier(.4,0,.2,1);
     position: relative;
   }
-  .y2k-fill::after {
+  .fill::after {
     content: '';
     position: absolute;
     right: 0; top: 0;
     width: 3px; height: 100%;
     background: #00aaff;
   }
-  .y2k-fill.p1 { background: linear-gradient(90deg, #00629b, #ffd700); }
-  .y2k-fill.p1::after { background: #ffd700; }
-  .y2k-count {
+  .fill.p1 { background: linear-gradient(90deg, #003f6b, #ffd700); }
+  .fill.p1::after { background: #ffd700; }
+  .fill.p2 { background: linear-gradient(90deg, #003f6b, #c0c0c0); }
+  .fill.p2::after { background: #c0c0c0; }
+  .fill.p3 { background: linear-gradient(90deg, #003f6b, #cd7f32); }
+  .fill.p3::after { background: #cd7f32; }
+  .count {
     font-family: 'Oswald', sans-serif;
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 22px);
     color: #00aaff;
     flex-shrink: 0;
-    min-width: 44px;
+    min-width: 42px;
     text-align: right;
     line-height: 1;
   }
-  .y2k-count small {
+  .count small {
     display: block;
     font-family: 'Share Tech Mono', monospace;
     font-size: 8px;
@@ -141,19 +192,22 @@
     text-transform: uppercase;
     font-weight: normal;
   }
-  .y2k-footer {
+
+  /* FOOTER */
+  .footer {
     margin-top: 12px;
     border-top: 1px solid rgba(0,98,155,0.3);
     padding-top: 8px;
     font-size: 9px;
-    color: rgba(0,98,155,0.7);
+    color: rgba(0,98,155,0.6);
     letter-spacing: 2px;
     text-transform: uppercase;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .spinner-y2k {
+
+  .spinner {
     display: inline-block;
     width: 8px; height: 8px;
     border: 1px solid rgba(0,170,255,0.3);
@@ -165,58 +219,75 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
+</head>
+<body>
+<div class="wrap">
 
-<h2 class="sr-only">Tablero de donaciones de sangre por especialidad de ingeniería — estilo Y2K</h2>
-
-<div class="y2k-wrap">
-  <div class="y2k-header">
-    <div class="y2k-title">Colecta de Sangre</div>
-    <div class="y2k-sub">IEEE — Rama Estudiantil</div>
-    <div class="y2k-live">
-      <span class="y2k-blink">&#9632;</span>
-      <span id="update-msg">Inicializando...</span>
+  <div class="header">
+    <div class="logos">
+      <!-- Logo UOH desde Wikimedia Commons -->
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Isologo_de_la_Universidad_de_O%27Higgins.svg/241px-Isologo_de_la_Universidad_de_O%27Higgins.svg.png"
+        alt="Universidad de O'Higgins"
+      >
+      <div class="logo-sep"></div>
+      <!-- Logo IEEE texto SVG inline -->
+      <svg width="52" height="36" viewBox="0 0 52 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="IEEE">
+        <text x="0" y="16" font-family="Oswald, sans-serif" font-size="18" font-weight="700" fill="#00aaff" letter-spacing="2">IEEE</text>
+      </svg>
+    </div>
+    <div class="header-text">
+      <div class="title">Colecta de Sangre</div>
+      <div class="subtitle">Rama Estudiantil UOH</div>
+      <div class="live-row">
+        <span class="blink">&#9632;</span>
+        <span id="update-msg">Inicializando...</span>
+      </div>
     </div>
   </div>
 
-  <div class="y2k-stats">
-    <div class="y2k-stat">
-      <div class="y2k-stat-val" id="stat-total">—</div>
-      <div class="y2k-stat-lbl">Total donaciones</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val" id="stat-total">—</div>
+      <div class="stat-lbl">Total donaciones</div>
     </div>
-    <div class="y2k-stat">
-      <div class="y2k-stat-val" id="stat-activas">—</div>
-      <div class="y2k-stat-lbl">Carreras activas</div>
+    <div class="stat">
+      <div class="stat-val" id="stat-activas">—</div>
+      <div class="stat-lbl">Carreras activas</div>
     </div>
   </div>
 
   <div id="ranking"></div>
 
-  <div class="y2k-footer">
-    <span>SYS:BLOODDRIVE_V1.0</span>
+  <div class="footer">
+    <span>SYS:BLOODDRIVE_V2.0 // IEEE-UOH</span>
     <span id="clock">--:--:--</span>
   </div>
+
 </div>
 
 <script>
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNZHNDHJUIHDWD-SCeROvrqzIQ-81c7erTvMMuJEVzWNhsmogZj01ZOy1-BF2NSGLsYTYFTq0hA_gJ/pub?gid=0&single=true&output=csv';
 
-const DEMO = [
-  { carrera: 'Ing. Eléctrica', donaciones: 58 },
-  { carrera: 'Ing. Civil', donaciones: 47 },
-  { carrera: 'Ing. Industrial', donaciones: 41 },
-  { carrera: 'Ing. Mecánica', donaciones: 38 },
-  { carrera: 'Ing. Informática', donaciones: 31 },
-  { carrera: 'Ing. Química', donaciones: 17 },
-  { carrera: 'Ing. Biomédica', donaciones: 10 },
-  { carrera: 'Ing. Ambiental', donaciones: 5 },
-];
+const NAME_MAP = { 'ING. MMO': 'Ing. Mod. Matemático de Datos' };
+
+const POS_CLASS = ['p1','p2','p3'];
+const POS_LABEL = ['01','02','03'];
+
+function fixName(n) {
+  const up = n.toUpperCase().trim();
+  return NAME_MAP[up] || n;
+}
 
 function parseCSV(text) {
   const lines = text.trim().split('\n').filter(l => l.trim());
   const start = isNaN(Number(lines[0].split(',')[1])) ? 1 : 0;
   return lines.slice(start).map(line => {
     const parts = line.split(',');
-    return { carrera: parts[0].replace(/"/g,'').trim(), donaciones: parseInt(parts[1]) || 0 };
+    return {
+      carrera: fixName(parts[0].replace(/"/g,'').trim()),
+      donaciones: parseInt(parts[1]) || 0
+    };
   }).filter(d => d.carrera);
 }
 
@@ -232,30 +303,27 @@ function renderRanking(data) {
   const container = document.getElementById('ranking');
   container.innerHTML = '';
 
-  const posClass = ['p1','p2','p3'];
-  const posLabel = ['01','02','03'];
-
   sorted.forEach((d, i) => {
-    const pct = Math.round((d.donaciones / max) * 100);
-    const pc = i < 3 ? posClass[i] : '';
-    const pl = i < 3 ? posLabel[i] : `0${i+1}`.slice(-2);
+    const pct = d.donaciones > 0 ? Math.round((d.donaciones / max) * 100) : 0;
+    const pc = i < 3 ? POS_CLASS[i] : '';
+    const pl = i < 3 ? POS_LABEL[i] : String(i+1).padStart(2,'0');
 
     const row = document.createElement('div');
-    row.className = 'y2k-row';
+    row.className = 'row';
     row.innerHTML = `
-      <div class="y2k-pos ${pc}">${pl}</div>
-      <div class="y2k-info">
-        <div class="y2k-name">${d.carrera}</div>
-        <div class="y2k-track">
-          <div class="y2k-fill ${pc}" style="width:0%" data-pct="${pct}"></div>
+      <div class="pos ${pc}">${pl}</div>
+      <div class="info">
+        <div class="name">${d.carrera}</div>
+        <div class="track">
+          <div class="fill ${pc}" style="width:0%" data-pct="${pct}"></div>
         </div>
       </div>
-      <div class="y2k-count">${d.donaciones}<small>unidades</small></div>`;
+      <div class="count">${d.donaciones}<small>unidades</small></div>`;
     container.appendChild(row);
   });
 
   requestAnimationFrame(() => {
-    document.querySelectorAll('.y2k-fill').forEach(el => {
+    document.querySelectorAll('.fill').forEach(el => {
       el.style.width = el.dataset.pct + '%';
     });
   });
@@ -263,24 +331,25 @@ function renderRanking(data) {
 
 async function refresh() {
   const msg = document.getElementById('update-msg');
-  msg.innerHTML = '<span class="spinner-y2k"></span>Cargando datos...';
+  msg.innerHTML = '<span class="spinner"></span>Cargando datos...';
   try {
     const res = await fetch(CSV_URL + '&t=' + Date.now());
-    if (!res.ok) throw new Error();
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
     const data = parseCSV(text);
-    if (!data.length) throw new Error();
+    if (!data.length) throw new Error('Sin datos');
     renderRanking(data);
     const now = new Date().toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
     msg.textContent = `Sync OK — ${now}`;
-  } catch {
-    renderRanking(DEMO);
-    msg.textContent = 'Demo mode — sin conexión';
+  } catch(e) {
+    msg.textContent = 'Error al conectar — reintentando...';
+    console.error(e);
   }
 }
 
 function updateClock() {
-  document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-CL');
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('es-CL');
 }
 
 refresh();
@@ -288,3 +357,5 @@ setInterval(refresh, 30000);
 setInterval(updateClock, 1000);
 updateClock();
 </script>
+</body>
+</html>
