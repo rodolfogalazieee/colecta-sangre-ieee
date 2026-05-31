@@ -1,0 +1,290 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+  .y2k-wrap {
+    background: #001a2e;
+    border: 2px solid #00629b;
+    border-radius: 4px;
+    padding: 16px;
+    font-family: 'Share Tech Mono', monospace;
+    position: relative;
+    overflow: hidden;
+  }
+  .y2k-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,98,155,0.04) 3px, rgba(0,98,155,0.04) 4px);
+    pointer-events: none;
+  }
+  .y2k-header {
+    border-bottom: 1px solid #00629b;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .y2k-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: #00aaff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .y2k-sub {
+    font-size: 10px;
+    color: #00629b;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .y2k-live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #00629b;
+    margin-top: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .y2k-blink { animation: blink 1s step-end infinite; color: #e24b4a; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .y2k-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .y2k-stat {
+    border: 1px solid #00629b;
+    padding: 8px 10px;
+    background: rgba(0,98,155,0.08);
+  }
+  .y2k-stat-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    color: #00aaff;
+    line-height: 1;
+  }
+  .y2k-stat-lbl {
+    font-size: 9px;
+    color: #00629b;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .y2k-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,98,155,0.25);
+  }
+  .y2k-row:last-child { border-bottom: none; }
+  .y2k-pos {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+    color: rgba(0,170,255,0.3);
+  }
+  .y2k-pos.p1 { color: #ffd700; }
+  .y2k-pos.p2 { color: #c0c0c0; }
+  .y2k-pos.p3 { color: #cd7f32; }
+  .y2k-info { flex: 1; min-width: 0; }
+  .y2k-name {
+    font-size: 11px;
+    color: #a0d4f5;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+  }
+  .y2k-track {
+    height: 4px;
+    background: rgba(0,98,155,0.2);
+    position: relative;
+  }
+  .y2k-fill {
+    height: 100%;
+    background: #00629b;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+  .y2k-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0;
+    width: 3px; height: 100%;
+    background: #00aaff;
+  }
+  .y2k-fill.p1 { background: linear-gradient(90deg, #00629b, #ffd700); }
+  .y2k-fill.p1::after { background: #ffd700; }
+  .y2k-count {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: #00aaff;
+    flex-shrink: 0;
+    min-width: 44px;
+    text-align: right;
+    line-height: 1;
+  }
+  .y2k-count small {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #00629b;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  .y2k-footer {
+    margin-top: 12px;
+    border-top: 1px solid rgba(0,98,155,0.3);
+    padding-top: 8px;
+    font-size: 9px;
+    color: rgba(0,98,155,0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .spinner-y2k {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border: 1px solid rgba(0,170,255,0.3);
+    border-top-color: #00aaff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<h2 class="sr-only">Tablero de donaciones de sangre por especialidad de ingeniería — estilo Y2K</h2>
+
+<div class="y2k-wrap">
+  <div class="y2k-header">
+    <div class="y2k-title">Colecta de Sangre</div>
+    <div class="y2k-sub">IEEE — Rama Estudiantil</div>
+    <div class="y2k-live">
+      <span class="y2k-blink">&#9632;</span>
+      <span id="update-msg">Inicializando...</span>
+    </div>
+  </div>
+
+  <div class="y2k-stats">
+    <div class="y2k-stat">
+      <div class="y2k-stat-val" id="stat-total">—</div>
+      <div class="y2k-stat-lbl">Total donaciones</div>
+    </div>
+    <div class="y2k-stat">
+      <div class="y2k-stat-val" id="stat-activas">—</div>
+      <div class="y2k-stat-lbl">Carreras activas</div>
+    </div>
+  </div>
+
+  <div id="ranking"></div>
+
+  <div class="y2k-footer">
+    <span>SYS:BLOODDRIVE_V1.0</span>
+    <span id="clock">--:--:--</span>
+  </div>
+</div>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNZHNDHJUIHDWD-SCeROvrqzIQ-81c7erTvMMuJEVzWNhsmogZj01ZOy1-BF2NSGLsYTYFTq0hA_gJ/pub?gid=0&single=true&output=csv';
+
+const DEMO = [
+  { carrera: 'Ing. Eléctrica', donaciones: 58 },
+  { carrera: 'Ing. Civil', donaciones: 47 },
+  { carrera: 'Ing. Industrial', donaciones: 41 },
+  { carrera: 'Ing. Mecánica', donaciones: 38 },
+  { carrera: 'Ing. Informática', donaciones: 31 },
+  { carrera: 'Ing. Química', donaciones: 17 },
+  { carrera: 'Ing. Biomédica', donaciones: 10 },
+  { carrera: 'Ing. Ambiental', donaciones: 5 },
+];
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n').filter(l => l.trim());
+  const start = isNaN(Number(lines[0].split(',')[1])) ? 1 : 0;
+  return lines.slice(start).map(line => {
+    const parts = line.split(',');
+    return { carrera: parts[0].replace(/"/g,'').trim(), donaciones: parseInt(parts[1]) || 0 };
+  }).filter(d => d.carrera);
+}
+
+function renderRanking(data) {
+  const sorted = [...data].sort((a,b) => b.donaciones - a.donaciones);
+  const max = sorted[0]?.donaciones || 1;
+  const total = sorted.reduce((s,d) => s + d.donaciones, 0);
+  const activas = sorted.filter(d => d.donaciones > 0).length;
+
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-activas').textContent = activas;
+
+  const container = document.getElementById('ranking');
+  container.innerHTML = '';
+
+  const posClass = ['p1','p2','p3'];
+  const posLabel = ['01','02','03'];
+
+  sorted.forEach((d, i) => {
+    const pct = Math.round((d.donaciones / max) * 100);
+    const pc = i < 3 ? posClass[i] : '';
+    const pl = i < 3 ? posLabel[i] : `0${i+1}`.slice(-2);
+
+    const row = document.createElement('div');
+    row.className = 'y2k-row';
+    row.innerHTML = `
+      <div class="y2k-pos ${pc}">${pl}</div>
+      <div class="y2k-info">
+        <div class="y2k-name">${d.carrera}</div>
+        <div class="y2k-track">
+          <div class="y2k-fill ${pc}" style="width:0%" data-pct="${pct}"></div>
+        </div>
+      </div>
+      <div class="y2k-count">${d.donaciones}<small>unidades</small></div>`;
+    container.appendChild(row);
+  });
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.y2k-fill').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  });
+}
+
+async function refresh() {
+  const msg = document.getElementById('update-msg');
+  msg.innerHTML = '<span class="spinner-y2k"></span>Cargando datos...';
+  try {
+    const res = await fetch(CSV_URL + '&t=' + Date.now());
+    if (!res.ok) throw new Error();
+    const text = await res.text();
+    const data = parseCSV(text);
+    if (!data.length) throw new Error();
+    renderRanking(data);
+    const now = new Date().toLocaleTimeString('es-CL', { hour:'2-digit', minute:'2-digit' });
+    msg.textContent = `Sync OK — ${now}`;
+  } catch {
+    renderRanking(DEMO);
+    msg.textContent = 'Demo mode — sin conexión';
+  }
+}
+
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('es-CL');
+}
+
+refresh();
+setInterval(refresh, 30000);
+setInterval(updateClock, 1000);
+updateClock();
+</script>
